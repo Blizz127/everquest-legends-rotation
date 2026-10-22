@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Name=EQ Legends Solo Assist
+Comment=Paladin + Cleric 1–50; F8 combat on, F9 off, F10 heal
+Exec=/home/blizz/Projects/everquest-legends-rotation/launch.sh
+Icon=applications-games
+Terminal=false
+Categories=Game;
+StartupNotify=true
+X-KDE-Autostart-enabled=false
