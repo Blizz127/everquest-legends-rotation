@@ -1,5 +1,8 @@
 # EQ Legends Solo Assist — Paladin / Cleric, levels 1–50
 
+F8 combat on, F9 off, F10 heal, F6 refresh spells. F7 toggles combat on/off
+(the Legion Go 2 Y1 wrapper presents Y1 as F7).
+
 Installed for the Alienware Bazzite desktop and the existing Lutris prefix.
 
 Live validation on 2026-10-17 now includes `Legira [4 PAL/CLR]` in

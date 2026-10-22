@@ -530,7 +530,7 @@ class Engine:
             for event in events:
                 if event.type != e.EV_KEY:
                     continue
-                if event.code in {e.KEY_F6, e.KEY_F8, e.KEY_F9, e.KEY_F10,
+                if event.code in {e.KEY_F6, e.KEY_F7, e.KEY_F8, e.KEY_F9, e.KEY_F10,
                                   e.KEY_ESC, e.KEY_ENTER, e.KEY_KPENTER, e.KEY_SLASH}:
                     self.trace("key", code=event.code, value=event.value,
                                active=self.active, preparing=self.preparing,
@@ -572,7 +572,20 @@ class Engine:
                             self.emit("Combat ON · target cleared · waiting for your target · F9 stop")
                 elif event.value == 0:
                     self.keys.discard(event.code)
-                    if event.code in {e.KEY_F6, e.KEY_F8, e.KEY_F9, e.KEY_F10} and not self.accept_hotkey(event.code):
+                    if event.code in {e.KEY_F6, e.KEY_F7, e.KEY_F8, e.KEY_F9, e.KEY_F10} and not self.accept_hotkey(event.code):
+                        continue
+                    if event.code == e.KEY_F7 and not self.preparing:
+                        # Single toggle (Legion Go 2 Y1 arrives as F7): F9 while
+                        # combat is on, F8 while it is off.
+                        if self.active:
+                            if self.gate.controls_ready():
+                                self.jobs.put(("attack_off", self.cancel_generation))
+                        elif not self.stop_keys_held():
+                            self.trace("arm_queued", generation=self.cancel_generation, source="F7")
+                            self.jobs.put(("arm", self.cancel_generation))
+                        else:
+                            self.trace("arm_ignored", reason="stop_key_held",
+                                       held=sorted(self.keys))
                         continue
                     if event.code == e.KEY_F8 and not self.preparing:
                         if not self.stop_keys_held():
